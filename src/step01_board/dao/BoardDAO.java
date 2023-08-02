@@ -10,6 +10,7 @@ import javax.sql.DataSource;
 import step01_board.dto.BoardDTO;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 public class BoardDAO {
 
@@ -44,11 +45,11 @@ public class BoardDAO {
 				maxWait="5000" 
 			/> 
 				
-			 */
+			*/
 				
 			Context initctx = new InitialContext();
-			Context envctx = (Context) initctx.lookup("java:comp/env");       // lookup 메서드를 통해 context.xml 파일에 접근하여 자바환경 코드를 검색
-			DataSource ds = (DataSource) envctx.lookup("jdbc/board"); 		  // <Context>태그안의 <Resource> 환경설정의 name이 jdbc/board인 것을 검색
+			Context envctx = (Context) initctx.lookup("java:comp/env"); // lookup 메서드를 통해 context.xml 파일에 접근하여 자바환경 코드를 검색
+			DataSource ds = (DataSource) envctx.lookup("jdbc/board"); // <Context>태그안의 <Resource> 환경설정의 name이 jdbc/board인 것을 검색
 			conn = ds.getConnection();				
 		} 
 		catch (Exception e) {
@@ -86,5 +87,71 @@ public class BoardDAO {
 		finally {
 			getClose();
 		}
+	}
+	
+	public ArrayList<BoardDTO> getBoardList() {
+		
+		ArrayList<BoardDTO> boardList = new ArrayList<>();
+		
+		try {
+			
+			getConnection();
+			pstmt = conn.prepareStatement("SELECT * FROM BOARD");
+			rs = pstmt.executeQuery();
+			
+			while(rs.next()) {
+				
+				BoardDTO temp = new BoardDTO();
+				temp.setBoardId(rs.getLong("BOARD_ID"));
+				temp.setWriter(rs.getString("WRITER"));
+				temp.setSubject(rs.getString("SUBJECT"));
+				temp.setEnrollDt(rs.getDate("ENROLL_DT"));
+				temp.setReadCnt(rs.getLong("READ_CNT"));
+				
+				boardList.add(temp);
+			}
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+		}	
+		finally {
+			getClose();
+		}
+		
+		//System.out.println(boardList);
+		return boardList;
+	}
+	
+	public BoardDTO getBoardDetail(long boardId) {
+		
+		BoardDTO boardDTO = new BoardDTO();
+		
+		try {
+			
+			getConnection();
+			pstmt = conn.prepareStatement("SELECT * FROM BOARD WHERE BOARD_ID = ?");
+			pstmt.setLong(1, boardId);
+			rs = pstmt.executeQuery();
+			
+			if(rs.next()) {
+				
+				boardDTO.setBoardId(boardId);
+				boardDTO.setWriter(rs.getString("WRITER"));
+				boardDTO.setEmail(rs.getString("EMAIL"));
+				boardDTO.setSubject(rs.getString("SUBJECT"));
+				boardDTO.setContent(rs.getString("CONTENT"));
+				boardDTO.setReadCnt(rs.getLong("READ_CNT"));
+				boardDTO.setEnrollDt(rs.getDate("ENROLL_DT"));
+			}
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+		}	
+		finally {
+			getClose();
+		}
+		
+		//System.out.println(boardDTO);
+		return boardDTO;
 	}
 }

@@ -2,8 +2,10 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="UTF-8">
-<title>bWrite</title>
+	<meta charset="UTF-8">
+	<title>bWrite</title>
+	<!-- WebContent 하위 경로부터 작성한다. -->
+	<script src="ckeditor/ckeditor.js"></script>
 </head>
 <body>
 
@@ -31,6 +33,7 @@
 					<td align="center">글내용</td>
 					<td>
 						<textarea rows="10" cols="50" name="content" ></textarea>
+						<script>CKEDITOR.replace("content");</script>
 					</td>
 				</tr>
 				<tr align="center">

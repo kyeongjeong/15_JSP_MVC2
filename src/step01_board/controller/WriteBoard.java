@@ -1,6 +1,7 @@
 package step01_board.controller;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -36,5 +37,15 @@ public class WriteBoard extends HttpServlet {
 		boardDTO.setContent(request.getParameter("content"));	
 		
 		BoardDAO.getInstance().insertBoard(boardDTO);
+		
+		response.setContentType("text/html; charset=UTF-8"); //한국어 프린트 가능
+		PrintWriter out = response.getWriter();
+		
+		String jsScript = "<script>";
+		jsScript += "alert('게시글이 등록되었습니다.');";
+		jsScript += "location.href='bWrite';";
+		jsScript += "</script>";
+		
+		out.print(jsScript);
 	}
 }
