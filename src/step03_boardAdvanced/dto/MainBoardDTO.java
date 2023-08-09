@@ -1,15 +1,14 @@
-package step01_board.dto;
+package step03_boardAdvanced.dto;
 
 import java.util.Date;
 
-public class BoardDTO {
+public class MainBoardDTO {
 	
 	private long boardId;
 	private String writer;
-	private String email;
 	private String subject;
-	private String password;
 	private String content;
+	private String passwd;
 	private long readCnt;
 	private Date enrollDt;
 	
@@ -25,29 +24,23 @@ public class BoardDTO {
 	public void setWriter(String writer) {
 		this.writer = writer;
 	}
-	public String getEmail() {
-		return email;
-	}
-	public void setEmail(String email) {
-		this.email = email;
-	}
 	public String getSubject() {
 		return subject;
 	}
 	public void setSubject(String subject) {
 		this.subject = subject;
 	}
-	public String getPassword() {
-		return password;
-	}
-	public void setPassword(String password) {
-		this.password = password;
-	}
 	public String getContent() {
 		return content;
 	}
 	public void setContent(String content) {
 		this.content = content;
+	}
+	public String getPasswd() {
+		return passwd;
+	}
+	public void setPasswd(String passwd) {
+		this.passwd = passwd;
 	}
 	public long getReadCnt() {
 		return readCnt;
@@ -64,8 +57,9 @@ public class BoardDTO {
 	
 	@Override
 	public String toString() {
-		return "BoardDTO [boardId=" + boardId + ", writer=" + writer + ", email=" + email + ", subject=" + subject
-				+ ", password=" + password + ", content=" + content + ", readCnt=" + readCnt + ", enrollDt=" + enrollDt
-				+ "]";
+		return "MainBoardDTO [boardId=" + boardId + ", writer=" + writer + ", subject=" + subject + ", content="
+				+ content + ", passwd=" + passwd + ", readCnt=" + readCnt + ", enrollDt=" + enrollDt + "]";
 	}
+	
+	
 }
